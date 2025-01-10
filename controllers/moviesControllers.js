@@ -14,6 +14,7 @@ function index (req,res){
 };
 //show
 function show (req,res){
+    const id = parseInt(req.params.id);
     const sqlMovies ="SELECT * FROM `movies` WHERE `id` = ? ";
     connection.query(sqlMovies,[id],(err, results)=>{
         if(err){

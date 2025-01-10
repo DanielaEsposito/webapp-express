@@ -13,9 +13,10 @@ const errorsHandler = require("./middlewares/errorsHandler.js");
 const notFound = require("./middlewares/notFound.js");
 
 //!ROUTERS
-//movies
+//MOVIES
 const moviesRouter = require("./routes/movieRoutes");
 app.use("/movies", moviesRouter);
+//REVIEWS
 const reviewsRouter = require("./routes/reviewsRoutes");
 app.use("/reviews", reviewsRouter);
 
