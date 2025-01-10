@@ -9,8 +9,8 @@ const {APP_HOST, APP_PORT}= process.env;
 //REGISTRAZIONE MIDDLEWARE
 app.use(express.json());
 app.use(express.static("public"));
-const errorHandler = require("./middleware/errorHandler.js");
-const notFound = require("./middleware/notFound.js");
+const errorsHandler = require("./middlewares/errorsHandler.js");
+const notFound = require("./middlewares/notFound.js");
 
 //!ROUTERS
 //movies
@@ -20,7 +20,7 @@ const reviewsRouter = require("./routes/reviewsRoutes");
 app.use("/reviews", reviewsRouter);
 
 //! ERROR HENDLER
-app.use(errorHandler);
+app.use(errorsHandler);
 app.use(notFound);
 //SERVER LISTENING
 app.listen(APP_PORT,()=>{
