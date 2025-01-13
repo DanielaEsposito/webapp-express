@@ -23,7 +23,7 @@ function index (req,res){
 function show (req,res){
     const id = parseInt(req.params.id);
     const sqlMovies ="SELECT * FROM `movies` WHERE `id` = ? ";
-    connection.query(sqlMovies,[id],(err, results)=>{
+    connection.query(sqlMovies,[id],(err, movieResults)=>{
         if(err){
            console.log(err);
            return res.tatus(500).json({
@@ -32,28 +32,40 @@ function show (req,res){
         if(results.lenght === 0){
            return res.status(404).json({error: "movie not found"});
         }
-       let [movie]= results;
-       res.json({
-        status:"ok",
-        movie
-       })
+        const movie = movieResults[0];
+
+     
+        const sqlReviews = `
+            SELECT reviews.*
+            FROM reviews
+            INNER JOIN movies
+            ON movies.id = reviews.movie_id
+            WHERE movies.id = ?`;
+        connection.query(sqlReviews, [id], (err, reviewResults) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    error: "Database query failed"
+                });
+            }
+
+            
+            res.json({
+                status: "ok",
+                movie: {
+                    ...movie,
+                    reviews: reviewResults 
+                }
+            });
+        });
+//    const [movie]= results;
+//    res.json({
+//     status:"ok",
+//     movie
+//    })
         
        })
-       
-    //    const sqlreviews = `
-    //    SELECT *
-    //    FROM reviews
-    //    INNER JOIN movies
-    //    ON  = movies.id = reviews.movie_id
-    //    WHERE movies.id = ?`
-    //    connection.query(sqlreviews,[id],(err, results)=>{
-    //        if(err)return res.status(500).json ({
-    //            error:'Database query failed'  
-    //        })
-    //        post.tags=results;
-    //        res.json(movie);
-    //    })
-    //    ;
+   
 };
 //create
 function create (req,res){
