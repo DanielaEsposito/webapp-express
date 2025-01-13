@@ -5,14 +5,14 @@ require ("dotenv").config();
 const express=require("express");
 const app = express();
 //IMPORT .ENV
-const {APP_HOST, APP_PORT}= process.env;
+const {APP_HOST, APP_PORT, FRONTEND_URL}= process.env;
 //REGISTRAZIONE MIDDLEWARE
 app.use(express.json());
 app.use(express.static("public"));
 const errorsHandler = require("./middlewares/errorsHandler.js");
 const notFound = require("./middlewares/notFound.js");
 app.use(cors({
-    origin: 'http://localhost:5173' 
+    origin: FRONTEND_URL
 }))
 
 //!ROUTERS
