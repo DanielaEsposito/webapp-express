@@ -27,7 +27,7 @@ function show (req,res){
         if(err){
            console.log(err);
            return res.tatus(500).json({
-           error: "Database queri failed"})  ;     
+           error: "Database query failed"})  ;     
         }
         if(results.lenght === 0){
            return res.status(404).json({error: "movie not found"});
@@ -53,7 +53,21 @@ function show (req,res){
 };
 //create
 function create (req,res){
-
+    const {title, director, genere, image}= req.body;
+    if(!title || !director || !genere ||!image){
+        return res.status(500).json({
+            error: "Invalid params"
+        })
+    }
+    const sql =`
+    INSERT INTO movies (title, director, genere, image) VALUES (?, ?,?,?);`
+    connection.query(sql,[title, director, genere, image],(err, results)=>{
+        if(err){
+        console.log(err);
+        return res.tatus(500).json({
+        error: "Database query failed"})  ;     
+        };
+})
 };
 //modify
 function modify (req,res){
@@ -65,6 +79,19 @@ function update (req,res){
 };
 //destroy
 function destroy (req,res){
+    const {id}=req.params;
+    const sql= `
+    DELETE  
+    FROM movies
+    WHERE id=?`
+    connection.query(sql,[id],(err)=>{
+        if(err){
+            console.log(err);
+            return res.tatus(500).json({
+            error: "Failed to delete post"})  ;     
+         }
+         res.status(204)
+    })
 
 };
 
