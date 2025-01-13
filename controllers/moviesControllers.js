@@ -32,24 +32,28 @@ function show (req,res){
         if(results.lenght === 0){
            return res.status(404).json({error: "movie not found"});
         }
-   
+       let [movie]= results;
+       res.json({
+        status:"ok",
+        movie
+       })
         
        })
-       let movie=results[0];
-       const sqlreviews = `
-       SELECT *
-       FROM reviews
-       INNER JOIN movies
-       ON  = movies.id = reviews.movie_id
-       WHERE movies.id = ?`
-       connection.query(sqlreviews,[id],(err, results)=>{
-           if(err)return res.status(500).json ({
-               error:'Database query failed'  
-           })
-           post.tags=results;
-           res.json(movie);
-       })
-       ;
+       
+    //    const sqlreviews = `
+    //    SELECT *
+    //    FROM reviews
+    //    INNER JOIN movies
+    //    ON  = movies.id = reviews.movie_id
+    //    WHERE movies.id = ?`
+    //    connection.query(sqlreviews,[id],(err, results)=>{
+    //        if(err)return res.status(500).json ({
+    //            error:'Database query failed'  
+    //        })
+    //        post.tags=results;
+    //        res.json(movie);
+    //    })
+    //    ;
 };
 //create
 function create (req,res){
@@ -72,8 +76,7 @@ function create (req,res){
 //modify
 function modify (req,res){
     const id = parseInt(req.params.id);
-    const sql = `
-    `
+   // const sql =
 };
 //update
 function update (req,res){

@@ -3,6 +3,7 @@ require ("dotenv").config();
 
 // EXPRESS
 const express=require("express");
+const cors=require("cors")
 const app = express();
 //IMPORT .ENV
 const {APP_HOST, APP_PORT, FRONTEND_URL}= process.env;
