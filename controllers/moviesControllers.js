@@ -7,7 +7,14 @@ function index (req,res){
             error:'Database query failed'
             
         })
-        res.json(results);
+        const movies = results.map(movie => ({
+            ...movie,
+            image: generatePathIgm(movie.image)
+        }))
+        res.json({
+            status: "ok",
+            movies
+        });
         console.log(res);
     })
 
@@ -23,7 +30,7 @@ function show (req,res){
            error: "Database queri failed"})  ;     
         }
         if(results.lenght === 0){
-           return res.status(404).json({error: "post not found"});
+           return res.status(404).json({error: "movie not found"});
         }
    
         
@@ -58,6 +65,12 @@ function update (req,res){
 };
 //destroy
 function destroy (req,res){
+
+};
+
+const generatePathIgm = (imgName)=>{
+    const {APP_HOST, APP_PORT}=process.env;
+    return `${APP_HOST}:${APP_PORT}/img/${imgName}`
 
 };
 module.exports ={index, show, create, modify, update, destroy};
