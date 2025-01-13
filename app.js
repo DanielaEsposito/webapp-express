@@ -11,6 +11,9 @@ app.use(express.json());
 app.use(express.static("public"));
 const errorsHandler = require("./middlewares/errorsHandler.js");
 const notFound = require("./middlewares/notFound.js");
+app.use(cors({
+    origin: 'http://localhost:5173' 
+}))
 
 //!ROUTERS
 //MOVIES

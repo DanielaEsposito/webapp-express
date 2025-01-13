@@ -71,15 +71,17 @@ function create (req,res){
 };
 //modify
 function modify (req,res){
-
+    const id = parseInt(req.params.id);
+    const sql = `
+    `
 };
 //update
 function update (req,res){
-
+    const id = parseInt(req.params.id);
 };
 //destroy
 function destroy (req,res){
-    const {id}=req.params;
+    const id = parseInt(req.params.id);
     const sql= `
     DELETE  
     FROM movies
