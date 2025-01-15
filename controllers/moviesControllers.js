@@ -29,7 +29,7 @@ function show (req,res){
            return res.tatus(500).json({
            error: "Database query failed"})  ;     
         }
-        if(results.lenght === 0){
+        if(movieResults.lenght === 0){
            return res.status(404).json({error: "movie not found"});
         }
         const movie = movieResults[0];
@@ -54,6 +54,7 @@ function show (req,res){
                 status: "ok",
                 movie: {
                     ...movie,
+                    image: generatePathIgm(movie.image),
                     reviews: reviewResults 
                 }
             });
@@ -85,6 +86,27 @@ function create (req,res){
         };
 })
 };
+//create new reviews
+function createNewReviews(req,res){
+    const movieId = req.params.id;
+    const {name, vote, text}= req.body;
+
+    
+    const sql =`
+    INSERT INTO reviews (name, vote, text, movie_id) VALUES (?, ?,?,?);`
+    connection.query(sql,[name, vote, text, movieId],(err, results)=>{
+        if(err){
+        console.log(err);
+        return res.tatus(500).json({
+        error: "Database query failed"})  ;     
+        };
+        res.json({
+            status:"ok",
+            message:"Reciew added"
+        })
+    })
+};
+
 //modify
 function modify (req,res){
     const id = parseInt(req.params.id);
@@ -117,4 +139,4 @@ const generatePathIgm = (imgName)=>{
     return `${APP_HOST}:${APP_PORT}/img/${imgName}`
 
 };
-module.exports ={index, show, create, modify, update, destroy};
+module.exports ={index, show, create, createNewReviews, modify, update, destroy};

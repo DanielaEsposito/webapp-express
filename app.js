@@ -21,8 +21,8 @@ app.use(cors({
 const moviesRouter = require("./routes/movieRoutes");
 app.use("/movies", moviesRouter);
 //REVIEWS
-const reviewsRouter = require("./routes/reviewsRoutes");
-app.use("/reviews", reviewsRouter);
+// const reviewsRouter = require("./routes/reviewsRoutes");
+// app.use("/reviews", reviewsRouter);
 
 //! ERROR HENDLER
 app.use(errorsHandler);

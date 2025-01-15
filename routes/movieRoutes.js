@@ -9,6 +9,8 @@ router.get('/',moviesController.index);
 router.get ("/:id",moviesController.show);
 //Create
 router.post ("/",moviesController.create);
+//create reviews
+router.post("/:id", moviesController.createNewReviews)
 //Update
 router.put ("/:id",moviesController.update );
 //Modify
